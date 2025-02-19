@@ -3,6 +3,8 @@ package com.example.users.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
+
 @Entity
 //@Data
 //@Getter
@@ -27,8 +29,8 @@ public class User {
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
     String password;
 
-//    String role;
-//    private boolean enabled;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Friend> friends;
 
     // Getter for id
     public Long getId() {
@@ -68,5 +70,13 @@ public class User {
     // Setter for password
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
     }
 }
