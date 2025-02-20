@@ -1,7 +1,10 @@
 package com.example.users.controller;
 
+import com.example.users.entity.Friend;
 import com.example.users.entity.User;
 import com.example.users.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +50,18 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/friend")
+    public ResponseEntity<Void> addFriend(@PathVariable Long id, @RequestBody Friend friend) {
+        userService.addFriend(id, friend);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/friend")
+    public ResponseEntity<List<Friend>> getFriends(@PathVariable Long id) {
+        List<Friend> friends = userService.getFriends(id);
+        return ResponseEntity.ok(friends);
     }
 }
 

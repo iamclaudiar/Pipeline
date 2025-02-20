@@ -1,7 +1,9 @@
 package com.example.users.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -17,11 +19,12 @@ public class Friend {
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     String name;
 
-    @NotBlank(message = "Birth date cannot be blank")
+    @NotNull(message = "Birth date cannot be null")
     LocalDateTime birth_date;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Long getId() {
@@ -46,5 +49,13 @@ public class Friend {
 
     public void setBirth_date(LocalDateTime birth_date) {
         this.birth_date = birth_date;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

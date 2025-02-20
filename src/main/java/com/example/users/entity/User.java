@@ -1,5 +1,6 @@
 package com.example.users.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -29,6 +30,7 @@ public class User {
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
     String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Friend> friends;
 
